@@ -4,10 +4,10 @@ import {useContext, useState} from "react";
 
 const MealItemForm = (props) => {
   //const meals = useContext(MealsContext);
-  const { meals, addChosenMeal, updateAmount } = useContext(MealsContext);
+  const { amount, meals, addChosenMeal, updateAmount } = useContext(MealsContext);
   const [inputAmount, setInputAmount] = useState(1);
   // const arrayMeals = {meals}
-  //console.log(meals)
+  console.log(amount)
   // console.log(arrayMeals)
 
   const saveChosenMeals = () => {
@@ -25,7 +25,7 @@ const MealItemForm = (props) => {
       };
 
       addChosenMeal(chosenMealData);
-      updateAmount(meals.amount + inputAmount); // Update the total amount
+      updateAmount(amount + inputAmount); // Update the total amount
     } else {
       console.log("Error")
     }

@@ -11,16 +11,13 @@ import mealsImage from './components/Header/meals.jpg';
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <div className={'main-image'}>
-        <img src={mealsImage} alt="A table full of delicious food!"/>
-      </div>
-      <MealsSummary/>
-      {/*<MealsContext.Provider value={DUMMY_MEALS}>*/}
-      {/*  <AvailableMeals/>*/}
-      {/*</MealsContext.Provider>*/}
       <MealsContextProvider initialMeals={DUMMY_MEALS}>
-        <AvailableMeals />
+        <Header/>
+        <div className={'main-image'}>
+          <img src={mealsImage} alt="A table full of delicious food!"/>
+        </div>
+        <MealsSummary/>
+        <AvailableMeals/>
       </MealsContextProvider>
 
     </div>

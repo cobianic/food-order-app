@@ -4,13 +4,12 @@ import MealsContext from "../store/meals-context";
 import React, {useContext} from "react";
 
 const HeaderCartButton = () => {
-  const mealsData = useContext(MealsContext);
+  const { amount} = useContext(MealsContext);
   return (
     <button className='button'>
       <CartIcon className='icon' />
       <span>Your Cart</span>
-      {/*<span className='badge'>{props.numberOfCartItems}</span>*/}
-      <span className='badge'>{mealsData.amount}</span>
+      <span className='badge'>{amount}</span>
     </button>
   );
 }
