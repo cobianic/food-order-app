@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header/Header";
+import './components/Header/Header.css'
+import MealsSummary from "./components/Meals/MealsSummary";
+import AvailableMeals from "./components/Meals/AvailableMeals";
+import {MealsContextProvider} from "./components/store/meals-context";
+import DUMMY_MEALS from "./dummy-meals";
+import mealsImage from './components/Header/meals.jpg';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <div className={'main-image'}>
+        <img src={mealsImage} alt="A table full of delicious food!"/>
+      </div>
+      <MealsSummary/>
+      {/*<MealsContext.Provider value={DUMMY_MEALS}>*/}
+      {/*  <AvailableMeals/>*/}
+      {/*</MealsContext.Provider>*/}
+      <MealsContextProvider initialMeals={DUMMY_MEALS}>
+        <AvailableMeals />
+      </MealsContextProvider>
+
     </div>
   );
 }
