@@ -1,4 +1,4 @@
-import './HeaderCartButton.css';
+import './HeaderCartButton.sass';
 import CartIcon from "./CartIcon";
 import Cart from "../Cart/Cart";
 import MealsContext from "../store/meals-context";

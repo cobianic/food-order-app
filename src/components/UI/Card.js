@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.css';
+import './Card.sass';
 
 /**
  * Represents a card component for styling and structuring content.  It accepts a className prop for

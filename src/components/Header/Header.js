@@ -1,6 +1,5 @@
-//import './Header.sass'
+import './Header.sass'
 import React from "react";
-import './Header.css'
 import HeaderCartButton from "./HeaderCartButton";
 
 

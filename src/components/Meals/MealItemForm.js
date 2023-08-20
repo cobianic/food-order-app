@@ -1,4 +1,4 @@
-import './MealItemForm.css'
+import './MealItemForm.sass'
 import MealsContext from "../store/meals-context";
 import {useContext, useState} from "react";
 

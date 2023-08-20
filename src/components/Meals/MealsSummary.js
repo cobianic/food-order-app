@@ -1,4 +1,4 @@
-import './MealsSummary.css'
+import './MealsSummary.sass'
 
 const MealsSummary = () => {
   return (

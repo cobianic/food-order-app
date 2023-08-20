@@ -1,4 +1,4 @@
-import './MealItem.css';
+import './MealItem.sass';
 import MealItemForm from './MealItemForm';
 
 const MealItem = (props) => {

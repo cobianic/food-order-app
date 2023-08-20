@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import './AvailableMeals.css';
+import './AvailableMeals.sass';
 import MealItem from './MealItem';
 import Card from '../UI/Card';
 import MealsContext from "../store/meals-context";
