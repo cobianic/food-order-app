@@ -5,6 +5,7 @@ const MealsContext = React.createContext({
   meals: [],
   addChosenMeal: (chosenMeal) => {},
   updateAmount: (newAmount) => {},
+  editCartMeals: (cartMeal) => {},
 });
 
 
@@ -14,15 +15,47 @@ export const MealsContextProvider = ({children, initialMeals}) => {
   const [amount, setAmount] = useState(0)
 
   const addChosenMeal = (chosenMeal) => {
-    setChosenMeals((prevChosenMeals) => [...prevChosenMeals, chosenMeal]);
+    const existingMealIndex = chosenMeals.findIndex(
+      (meal) => meal.name === chosenMeal.name
+    );
+
+    if (existingMealIndex !== -1) {
+      const updatedChosenMeals = [...chosenMeals];
+      updatedChosenMeals[existingMealIndex].amount += chosenMeal.amount;
+      setChosenMeals(updatedChosenMeals);
+    } else {
+      setChosenMeals((prevChosenMeals) => [...prevChosenMeals, chosenMeal]);
+    }
   };
 
   const updateAmount = (newAmount) => {
     setAmount(newAmount);
   };
 
+  const editCartMeals = (cartMeal) => {
+    const existingMealIndex = chosenMeals.findIndex(
+      (meal) => meal.name === cartMeal.name
+    );
+
+    if (existingMealIndex !== -1) {
+      const updatedChosenMeals = [...chosenMeals];
+      updatedChosenMeals[existingMealIndex].amount = cartMeal.amount;
+      if (updatedChosenMeals[existingMealIndex].amount <= 0) {
+        updatedChosenMeals.splice(existingMealIndex, 1);
+      }
+      setChosenMeals(updatedChosenMeals);
+
+      // Update the "amount" state
+      const newAmount = updatedChosenMeals.reduce(
+        (total, meal) => total + meal.amount,
+        0
+      );
+      setAmount(newAmount);
+    }
+  };
+
   return (
-    <MealsContext.Provider value={{ meals, amount, addChosenMeal, updateAmount }}>
+    <MealsContext.Provider value={{ meals, chosenMeals, amount, addChosenMeal, updateAmount, editCartMeals }}>
       {children}
     </MealsContext.Provider>
   );

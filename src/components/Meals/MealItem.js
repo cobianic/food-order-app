@@ -3,8 +3,6 @@ import MealItemForm from './MealItemForm';
 
 const MealItem = (props) => {
 
-  //console.log(props)
-
   return (
     <li className='meal'>
       <div>

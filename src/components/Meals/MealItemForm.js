@@ -3,19 +3,12 @@ import MealsContext from "../store/meals-context";
 import {useContext, useState} from "react";
 
 const MealItemForm = (props) => {
-  //const meals = useContext(MealsContext);
-  const { amount, meals, addChosenMeal, updateAmount } = useContext(MealsContext);
+  const {amount, meals, addChosenMeal, updateAmount} = useContext(MealsContext);
   const [inputAmount, setInputAmount] = useState(1);
-  // const arrayMeals = {meals}
-  console.log(amount)
-  // console.log(arrayMeals)
 
-  const saveChosenMeals = () => {
-    // eslint-disable-next-line no-restricted-globals
+  const saveChosenMeals = (event) => {
     event.preventDefault();
     const foundMeal = meals.find((meal) => meal.id === props.id)
-    console.log("Id: ", props.id)
-    console.log(props)
 
     if (foundMeal) {
       const chosenMealData = {
@@ -37,14 +30,17 @@ const MealItemForm = (props) => {
 
   return (
     <form className="form">
-      <input
-        className="form-input"
-        type="number"
-        min="1"
-        step="1"
-        value={inputAmount}
-        onChange={inputChangeHandler} // Update inputAmount state on input change/>
+      <div>
+        <label className="form-label">Amount</label>
+        <input
+          className="form-input"
+          type="number"
+          min="1"
+          step="1"
+          value={inputAmount}
+          onChange={inputChangeHandler} // Update inputAmount state on input change/>
         />
+      </div>
       <button className="form-button" onClick={saveChosenMeals}>+ Add</button>
     </form>
   );

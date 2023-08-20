@@ -6,8 +6,6 @@ import MealsContext from "../store/meals-context";
 
 const AvailableMeals = () => {
   const { meals } = useContext(MealsContext);
-  //const meals = useContext(MealsContext);
-  //console.log(meals)
 
   return (
     <section className='meals'>
