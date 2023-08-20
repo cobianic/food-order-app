@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <React.Fragment>
       <div className="header">
-        <h1>From React with 💙</h1>
+        <h1>TastyMeals</h1>
         <HeaderCartButton />
       </div>
 

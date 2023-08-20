@@ -5,7 +5,7 @@ import MealsSummary from "./components/Meals/MealsSummary";
 import AvailableMeals from "./components/Meals/AvailableMeals";
 import {MealsContextProvider} from "./components/store/meals-context";
 import DUMMY_MEALS from "./dummy-meals";
-import mealsImage from './components/Header/meals.jpg';
+import mealsImage from './components/Header/meals.webp';
 
 
 function App() {
