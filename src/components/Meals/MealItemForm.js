@@ -2,28 +2,37 @@ import './MealItemForm.css'
 import MealsContext from "../store/meals-context";
 import {useContext, useState} from "react";
 
+/**
+ * Represents the form for selecting the amount of a meal and adding it to the cart.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.id - The ID of the meal.
+ * @returns {JSX.Element} - The JSX element representing the meal item form.
+ */
 const MealItemForm = (props) => {
   const {amount, meals, addChosenMeal, updateAmount} = useContext(MealsContext);
   const [inputAmount, setInputAmount] = useState(1);
 
+  // Save the chosen meal to the cart and update the total amount
   const saveChosenMeals = (event) => {
     event.preventDefault();
-    const foundMeal = meals.find((meal) => meal.id === props.id)
+    const foundMeal = meals.find((meal) => meal.id === props.id);
 
     if (foundMeal) {
       const chosenMealData = {
         name: foundMeal.name,
         price: foundMeal.price,
-        amount: inputAmount, // Add inputAmount to the chosen meal data
+        amount: inputAmount,
       };
 
       addChosenMeal(chosenMealData);
-      updateAmount(amount + inputAmount); // Update the total amount
+      updateAmount(amount + inputAmount);
     } else {
-      console.log("Error")
+      console.log("Error");
     }
   };
 
+  // Handle input change for the meal amount
   const inputChangeHandler = (event) => {
     setInputAmount(+event.target.value);
   };
@@ -38,7 +47,7 @@ const MealItemForm = (props) => {
           min="1"
           step="1"
           value={inputAmount}
-          onChange={inputChangeHandler} // Update inputAmount state on input change/>
+          onChange={inputChangeHandler}
         />
       </div>
       <button className="form-button" onClick={saveChosenMeals}>+ Add</button>
