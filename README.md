@@ -1,1 +1,1 @@
-![How it looks](img_1.png)
+![How it looks](public/img.png)
