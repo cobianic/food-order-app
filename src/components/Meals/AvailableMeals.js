@@ -12,33 +12,33 @@ const AvailableMeals = () => {
     setIsLoading(true)
     setError(null)
     const fetchMeals = async () => {
-      try {
-        const response = await fetch(
-          'https://react-fetch-movies-ad76e-default-rtdb.europe-west1.firebasedatabase.app/food-order-app.json'
-        )
-        if (!response.ok) {
-          throw new Error('An error occurred. Status: ' + response.status)
-        }
-        const data = await response.json();
-        const loadedMeals = []
-        for (const key in data) {
-          loadedMeals.push({
-            id: key,
-            name: data[key].name,
-            description: data[key].description,
-            price: data[key].price
-          })
-        }
-        setMeals(loadedMeals);
-      } catch (error) {
-        setError(error.message)
+      const response = await fetch(
+        'https://react-fetch-movies-ad76e-default-rtdb.europe-west1.firebasedatabase.app/food-order-app'
+      )
+      if (!response.ok) {
+        throw new Error('An error occurred. Status: ' + response.status)
       }
+      const data = await response.json();
+      const loadedMeals = []
+      for (const key in data) {
+        loadedMeals.push({
+          id: key,
+          name: data[key].name,
+          description: data[key].description,
+          price: data[key].price
+        })
+      }
+      setMeals(loadedMeals);
       setIsLoading(false)
     }
-    fetchMeals()
-  }, [setIsLoading, setError])
 
-  let content = <p>Found no movies</p>
+    fetchMeals().catch(error => {
+      setIsLoading(false)
+      setError(error.message)
+    })
+  }, [])
+
+  let content = <Card>Found no meals</Card>
 
   if (meals.length > 0) {
     content = <Card>
