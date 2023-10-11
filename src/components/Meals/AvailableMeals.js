@@ -13,7 +13,7 @@ const AvailableMeals = () => {
     setError(null)
     const fetchMeals = async () => {
       const response = await fetch(
-        'https://react-fetch-movies-ad76e-default-rtdb.europe-west1.firebasedatabase.app/food-order-app'
+        'https://react-fetch-movies-ad76e-default-rtdb.europe-west1.firebasedatabase.app/food-order-app.json'
       )
       if (!response.ok) {
         throw new Error('An error occurred. Status: ' + response.status)
