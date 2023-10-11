@@ -1,6 +1,7 @@
 import './Cart.sass'
 import CartItem from "./CartItem";
 import Card from "../UI/Card";
+import CartForm from "./CartForm";
 import {useContext} from "react";
 import MealsContext from "../store/meals-context";
 
@@ -48,6 +49,7 @@ const Cart = (props) => {
             <p>Total Amount</p>
             ${totalAmount}
           </div>
+          <CartForm />
           <div className={"actions"}>
             <button onClick={backdropClickHandler}>Close</button>
             <button className={"actions button"} onClick={orderHandler}>Order</button>
