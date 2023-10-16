@@ -4,7 +4,9 @@ import Card from "../UI/Card";
 import CartForm from "./CartForm";
 import {useContext} from "react";
 import MealsContext from "../store/meals-context";
+import useInput from "../../hooks/use-input";
 
+const validateName = (name) => name.trim() !== '';
 /**
  * Represents the shopping cart component that displays the selected meals and allows ordering.
  *
@@ -14,6 +16,22 @@ import MealsContext from "../store/meals-context";
  */
 const Cart = (props) => {
   const {chosenMeals, editCartMeals} = useContext(MealsContext);
+
+  const {
+    value: enteredFirstName,
+    isValid: enteredFirstNameIsValid,
+    valueChangeHandler: firstNameChangeHandler,
+    inputBlurHandler: firstNameBlurHandler,
+    reset: resetFirstNameInput
+  } = useInput(validateName);
+
+  const {
+    value: enteredLastName,
+    isValid: enteredLastNameIsValid,
+    valueChangeHandler: lastNameChangeHandler,
+    inputBlurHandler: lastNameBlurHandler,
+    reset: resetLastNameInput
+  } = useInput(validateName);
 
   // Calculate the total amount of selected meals
   const totalAmount = chosenMeals.reduce((total, meal) => {
@@ -49,10 +67,23 @@ const Cart = (props) => {
             <p>Total Amount</p>
             ${totalAmount}
           </div>
-          <CartForm />
+          <CartForm
+            firstNameChangeHandler={firstNameChangeHandler}
+            firstNameBlurHandler={firstNameBlurHandler}
+            lastNameChangeHandler={lastNameChangeHandler}
+            lastNameBlurHandler={lastNameBlurHandler}
+            enteredFirstName={enteredFirstName}
+            enteredLastName={enteredLastName}
+            enteredFirstNameIsValid={enteredFirstNameIsValid}
+            enteredLastNameIsValid={enteredLastNameIsValid}
+            resetFirstNameInput={resetFirstNameInput}
+            resetLastNameInput={resetLastNameInput}/>
           <div className={"actions"}>
             <button onClick={backdropClickHandler}>Close</button>
-            <button className={"actions button"} onClick={orderHandler}>Order</button>
+            <button
+              className={"actions button"}
+              onClick={orderHandler}
+              disabled={!enteredFirstNameIsValid || !enteredLastNameIsValid}>Order</button>
           </div>
         </Card>
       </div>

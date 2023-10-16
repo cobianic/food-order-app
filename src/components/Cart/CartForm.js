@@ -1,43 +1,19 @@
-import useInput from "../../hooks/use-input";
 import './CartForm.sass'
 
-const validateName = (name) => name.trim() !== '';
-
-const CartForm = () => {
-
-  const {
-    value: enteredFirstName,
-    isValid: enteredFirstNameIsValid,
-    valueChangeHandler: firstNameChangeHandler,
-    inputBlurHandler: firstNameBlurHandler,
-    reset: resetFirstNameInput
-  } = useInput(validateName);
-
-  const {
-    value: enteredLastName,
-    isValid: enteredLastNameIsValid,
-    valueChangeHandler: lastNameChangeHandler,
-    inputBlurHandler: lastNameBlurHandler,
-    reset: resetLastNameInput
-  } = useInput(validateName);
-
-  let formIsValid = false;
-  if (enteredFirstNameIsValid && enteredLastNameIsValid) {
-    formIsValid = true;
-  }
+const CartForm = (props) => {
 
   const formSubmissionHandler = event => {
     event.preventDefault();
 
-    if (!formIsValid) {
+    if (!props.enteredFirstNameIsValid || !props.enteredLastNameIsValid) {
       return;
     }
-    resetFirstNameInput();
-    resetLastNameInput();
+    props.resetFirstNameInput();
+    props.resetLastNameInput();
   };
 
-  const firstNameInputClasses = enteredFirstNameIsValid === false ? 'form-control invalid' : 'form-control';
-  const lastNameInputClasses = enteredLastNameIsValid === false ? 'form-control invalid' : 'form-control';
+  const firstNameInputClasses = props.enteredFirstNameIsValid === false ? 'form-control invalid' : 'form-control';
+  const lastNameInputClasses = props.enteredLastNameIsValid === false ? 'form-control invalid' : 'form-control';
 
   return (
     <form onSubmit={formSubmissionHandler}>
@@ -46,22 +22,22 @@ const CartForm = () => {
         <input
           type='text'
           id='name'
-          onChange={firstNameChangeHandler}
-          onBlur={firstNameBlurHandler}
-          value={enteredFirstName}
+          onChange={props.firstNameChangeHandler}
+          onBlur={props.firstNameBlurHandler}
+          value={props.enteredFirstName}
         />
-        {enteredFirstNameIsValid === false && <p className={'error-text'}>Name must not be empty.</p>}
+        {props.enteredFirstNameIsValid === false && <p className={'error-text'}>Name must not be empty.</p>}
       </div>
       <div className={lastNameInputClasses}>
         <label htmlFor='name'>Last Name</label>
         <input
           type='text'
           id='name'
-          onChange={lastNameChangeHandler}
-          onBlur={lastNameBlurHandler}
-          value={enteredLastName}
+          onChange={props.lastNameChangeHandler}
+          onBlur={props.lastNameBlurHandler}
+          value={props.enteredLastName}
         />
-        {enteredLastNameIsValid === false && <p className={'error-text'}>Last name must not be empty.</p>}
+        {props.enteredLastNameIsValid === false && <p className={'error-text'}>Last name must not be empty.</p>}
       </div>
     </form>
   )
