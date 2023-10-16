@@ -33,6 +33,14 @@ const Cart = (props) => {
     reset: resetLastNameInput
   } = useInput(validateName);
 
+  const {
+    value: enteredAddress,
+    isValid: enteredAddressIsValid,
+    valueChangeHandler: addressChangeHandler,
+    inputBlurHandler: addressBlurHandler,
+    reset: resetAddressInput
+  } = useInput(validateName);
+
   // Calculate the total amount of selected meals
   const totalAmount = chosenMeals.reduce((total, meal) => {
     return (total + meal.price * meal.amount);
@@ -52,7 +60,8 @@ const Cart = (props) => {
         price: meal.price,
       })),
       firstName: enteredFirstName,
-      enteredLastName: enteredLastName
+      enteredLastName: enteredLastName,
+      address: enteredAddress
     };
 
     try {
@@ -77,8 +86,6 @@ const Cart = (props) => {
     }
 
     console.log(order);
-
-    alert('Successfully ordered!'); // Show an alert when the "Order" button is pressed
     props.onClose();
   };
 
@@ -105,18 +112,25 @@ const Cart = (props) => {
             firstNameBlurHandler={firstNameBlurHandler}
             lastNameChangeHandler={lastNameChangeHandler}
             lastNameBlurHandler={lastNameBlurHandler}
+            addressChangeHandler={addressChangeHandler}
+            addressBlurHandler={addressBlurHandler}
             enteredFirstName={enteredFirstName}
             enteredLastName={enteredLastName}
+            enteredAddress={enteredAddress}
             enteredFirstNameIsValid={enteredFirstNameIsValid}
             enteredLastNameIsValid={enteredLastNameIsValid}
+            enteredAddressIsValid={enteredAddressIsValid}
             resetFirstNameInput={resetFirstNameInput}
-            resetLastNameInput={resetLastNameInput}/>
+            resetLastNameInput={resetLastNameInput}
+            resetAddressInput={resetAddressInput}
+
+          />
           <div className={"actions"}>
             <button onClick={backdropClickHandler}>Close</button>
             <button
               className={"actions button"}
               onClick={orderHandler}
-              disabled={!enteredFirstNameIsValid || !enteredLastNameIsValid}>Order</button>
+              disabled={!enteredFirstNameIsValid || !enteredLastNameIsValid || !enteredAddressIsValid}>Order</button>
           </div>
         </Card>
       </div>
