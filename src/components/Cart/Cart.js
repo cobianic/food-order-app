@@ -44,7 +44,40 @@ const Cart = (props) => {
   };
 
   // Handle ordering the selected meals
-  const orderHandler = () => {
+  const orderHandler = async () => {
+    const order = {
+      meals: chosenMeals.map(meal => ({
+        name: meal.name,
+        amount: meal.amount,
+        price: meal.price,
+      })),
+      firstName: enteredFirstName,
+      enteredLastName: enteredLastName
+    };
+
+    try {
+      const response =await fetch('https://react-fetch-movies-ad76e-default-rtdb.europe-west1.firebasedatabase.app/food-order-customer-data.json', {
+        method: 'POST',
+        body: JSON.stringify(order),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send order to the database!');
+      }
+
+      const data = await response.json();
+      console.log('Order sent successfully:', data);
+      alert('Successfully ordered!');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to order!');
+    }
+
+    console.log(order);
+
     alert('Successfully ordered!'); // Show an alert when the "Order" button is pressed
     props.onClose();
   };
