@@ -61,7 +61,8 @@ const Cart = (props) => {
       })),
       firstName: enteredFirstName,
       enteredLastName: enteredLastName,
-      address: enteredAddress
+      address: enteredAddress,
+      amount: totalAmount
     };
 
     try {
