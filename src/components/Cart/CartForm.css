@@ -1,5 +1,11 @@
+.form-main {
+  margin: 1rem 0;
+  height: 8rem;
+  overflow: auto;
+}
+
 .form-control {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .form-control input {
   display: block;

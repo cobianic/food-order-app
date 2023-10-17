@@ -17,7 +17,7 @@ const CartForm = (props) => {
   const addressInputClasses = props.enteredAddressIsValid === false ? 'form-control invalid' : 'form-control';
 
   return (
-    <form onSubmit={formSubmissionHandler}>
+    <form className={'form-main'} onSubmit={formSubmissionHandler}>
       <div className={firstNameInputClasses}>
         <label htmlFor={'firstName'}>First Name</label>
         <input
