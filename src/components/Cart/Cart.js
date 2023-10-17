@@ -2,7 +2,7 @@ import './Cart.sass'
 import CartItem from "./CartItem";
 import Card from "../UI/Card";
 import CartForm from "./CartForm";
-import {useContext} from "react";
+import React, {useContext, useState} from "react";
 import MealsContext from "../store/meals-context";
 import useInput from "../../hooks/use-input";
 
@@ -16,6 +16,9 @@ const validateName = (name) => name.trim() !== '';
  */
 const Cart = (props) => {
   const {chosenMeals, editCartMeals} = useContext(MealsContext);
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [didSubmit, setDidSubmit] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const {
     value: enteredFirstName,
@@ -53,6 +56,7 @@ const Cart = (props) => {
 
   // Handle ordering the selected meals
   const orderHandler = async () => {
+    setIsSubmitting(true)
     const order = {
       meals: chosenMeals.map(meal => ({
         name: meal.name,
@@ -66,7 +70,7 @@ const Cart = (props) => {
     };
 
     try {
-      const response =await fetch('https://react-fetch-movies-ad76e-default-rtdb.europe-west1.firebasedatabase.app/food-order-customer-data.json', {
+      const response = await fetch('https://react-fetch-movies-ad76e-default-rtdb.europe-west1.firebasedatabase.app/food-order-customer-data.json', {
         method: 'POST',
         body: JSON.stringify(order),
         headers: {
@@ -80,18 +84,19 @@ const Cart = (props) => {
 
       const data = await response.json();
       console.log('Order sent successfully:', data);
-      alert('Successfully ordered!');
+      setDidSubmit(true)
     } catch (error) {
       console.error('Error:', error);
-      alert('Failed to order!');
+      setIsError(true)
     }
 
     console.log(order);
-    props.onClose();
+    setIsSubmitting(false)
+    // props.onClose();
   };
 
-  return (
-    <div className="backdrop" onClick={backdropClickHandler}>
+  const cartModalContent = (
+    <React.Fragment>
       <div className="cart-modal" onClick={e => e.stopPropagation()}>
         <Card className={"cart"}>
           {/* Map through chosenMeals to display individual cart items */}
@@ -131,10 +136,35 @@ const Cart = (props) => {
             <button
               className={"actions button"}
               onClick={orderHandler}
-              disabled={!enteredFirstNameIsValid || !enteredLastNameIsValid || !enteredAddressIsValid}>Order</button>
+              disabled={!enteredFirstNameIsValid || !enteredLastNameIsValid || !enteredAddressIsValid}>Order
+            </button>
           </div>
         </Card>
       </div>
+    </React.Fragment>
+  )
+
+  const isSubmittingContent = <Card className={"notification"}>Sending order data...</Card>
+
+  const somethingWentWrong = <Card className={"notification"}>Something went wrong!</Card>
+
+  const didSubmitContent = (
+    <React.Fragment>
+      <Card className={"notification"}>
+        <p>Successfully ordered!</p>
+        <div className={"actions"}>
+          <button className={"actions button"} onClick={backdropClickHandler}>Close</button>
+        </div>
+      </Card>
+    </React.Fragment>
+  )
+
+  return (
+    <div className="backdrop" onClick={backdropClickHandler}>
+      {!isSubmitting && !didSubmit && !isError && cartModalContent}
+      {isSubmitting && isSubmittingContent}
+      {isError && somethingWentWrong}
+      {!isSubmitting && !isError && didSubmit && didSubmitContent}
     </div>
   )
 }

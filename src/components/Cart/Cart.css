@@ -77,4 +77,10 @@
   cursor: not-allowed;
 }
 
+.notification {
+  font-size: 1.2rem;
+  width: 600px;
+  color: black;
+}
+
 /*# sourceMappingURL=Cart.css.map */
