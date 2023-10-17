@@ -49,6 +49,17 @@ const Cart = (props) => {
     return (total + meal.price * meal.amount);
   }, 0).toFixed(2);
 
+  // Function to reset the amount of each meal to 0
+  const resetMealAmounts = () => {
+    chosenMeals.forEach(meal => {
+      editCartMeals({
+        name: meal.name,
+        price: meal.price,
+        amount: 0,
+      }, 'remove');
+    });
+  };
+
   // Handle clicking on the backdrop to close the cart
   const backdropClickHandler = () => {
     props.onClose();
@@ -146,14 +157,27 @@ const Cart = (props) => {
 
   const isSubmittingContent = <Card className={"notification"}>Sending order data...</Card>
 
-  const somethingWentWrong = <Card className={"notification"}>Something went wrong!</Card>
+  const somethingWentWrong = (
+    <React.Fragment>
+      <Card className={"notification"}>
+        <p>Something went wrong</p>
+        <div className={"actions"}>
+          <button
+            className={"actions button"}
+            onClick={backdropClickHandler}>Close</button>
+        </div>
+      </Card>
+    </React.Fragment>
+  )
 
   const didSubmitContent = (
     <React.Fragment>
       <Card className={"notification"}>
         <p>Successfully ordered!</p>
         <div className={"actions"}>
-          <button className={"actions button"} onClick={backdropClickHandler}>Close</button>
+          <button
+            className={"actions button"}
+            onClick={() => {resetMealAmounts(); backdropClickHandler();}}>Close</button>
         </div>
       </Card>
     </React.Fragment>
